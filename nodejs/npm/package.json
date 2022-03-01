@@ -1,0 +1,19 @@
+{
+  "name": "npm",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node test.js",
+    "build": "echo $npm_package_config_port",
+    "tag": "echo $npm_config_tag",
+    "env": "env"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "config": {
+    "env": "zyh",
+    "port": "8080"
+  },
+  "description": ""
+}

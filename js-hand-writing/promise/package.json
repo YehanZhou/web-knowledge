@@ -4,22 +4,11 @@
   "description": "my promise",
   "main": "MyPromise1.js",
   "scripts": {
-    "test": "promises-aplus-tests MyPromise1",
-    "start": "node test.js",
-    "build": "echo $npm_package_config_port",
-    "tag": "echo $npm_config_tag",
-    "env": "env"
+    "test": "promises-aplus-tests MyPromise1"
   },
   "author": "ITEM",
   "license": "ISC",
   "devDependencies": {
     "promises-aplus-tests": "^2.1.2"
-  },
-  "dependencies": {
-    "jquery": "^3.6.0"
-  },
-  "config": {
-    "env": "zyh",
-    "port": "8080"
   }
 }

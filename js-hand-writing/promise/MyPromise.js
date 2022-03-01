@@ -88,6 +88,75 @@ class MyPromise{
             reject(reason)
         })
     }
+
+    static all(promises){
+        let datas
+        let count = 0
+        return new MyPromise((resolve,reject)=>{
+            promises.forEach((p,idx) => {
+                MyPromise.resolve(p).then(val=>{
+                    datas[idx]=val
+                    if(++count === promises.length){
+                        resolve(datas)
+                    }
+                }, err => {
+                    reject(err)
+                })
+            })
+        })
+    }
+
+    static race(promises){
+        return new MyPromise((resolve,reject)=>{
+            promises.forEach(p => {
+                MyPromise.resolve(p).then(val=>{
+                    resolve(val)
+                }, err => {
+                    reject(err)
+                })
+            })
+        })
+    }
+
+    static allSettled(promises){
+        let result = []
+        return new MyPromise((resolve,reject)=>{
+            promises.forEach(p => {
+                MyPromise.resolve(p).then(val=>{
+                    result.push({
+                        status: 'fulfilled',
+                        value: val
+                    })
+                    if(result.length === promises.length){
+                        resolve(result)
+                    }
+                }, err => {
+                    result.push({
+                        status: 'rejected',
+                        value: val
+                    })
+                    if(result.length === promises.length){
+                        resolve(result)
+                    }
+                })
+            })
+        })
+    }
+
+    static any(promises){
+        let count = 0
+        return new MyPromise((resolve,reject)=>{
+            promises.forEach(p => {
+                MyPromise.resolve(p).then(val=>{
+                    resolve(val)
+                }, err => {
+                    if(++count === promises.length){
+                        reject(new AggregateError('All promises were rejected'))
+                    }
+                })
+            })
+        })
+    }
 }
 
 function resolvePromise(promise, x, resolve, reject) {

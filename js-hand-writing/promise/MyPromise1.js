@@ -135,9 +135,11 @@ MyPromise.all = function(promise2) {
     let count = 0
     let dataArr
     promise2.forEach((p, index) => {
-      p.then(data => {dataArr[index] = data})
-      if( ++count === promise2.length) resolve(dataArr)
-    }, reject)
+      p.then(data => {
+        dataArr[index] = data
+        if( ++count === promise2.length) resolve(dataArr)
+      }, reject)
+    })
   })
 }
 // race方法
