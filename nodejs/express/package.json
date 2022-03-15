@@ -1,0 +1,10 @@
+{
+  "name": "express",
+  "packageManager": "yarn@3.2.0",
+  "scripts": {
+    "start": "yarn dlx nodemon src/server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.3"
+  }
+}
