@@ -1,0 +1,14 @@
+# 指定 node 版本号，满足宿主环境
+FROM node:16-alpine
+
+# 指定工作目录，将代码添加至此
+WORKDIR /dist
+ADD . /dist
+
+# 如何将项目跑起来
+RUN npm install
+RUN npm run build
+CMD npm start
+
+# 暴露出运行的端口号，可对外接入服务发现
+EXPOSE 8080
