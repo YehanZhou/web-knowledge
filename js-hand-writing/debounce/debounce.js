@@ -89,7 +89,7 @@ function getUserAction(e) {
     return count
 }
 
-const setAction = debounce4(getUserAction, 10000, true)
+const setAction = debounce1(getUserAction, 10000, true)
 // 300ms之内不再触发，我才执行事件
 container.onmousemove = setAction
 

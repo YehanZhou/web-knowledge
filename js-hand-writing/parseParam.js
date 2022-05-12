@@ -1,8 +1,8 @@
 function parseParam(url) {
     const paramsStr = /.+\?(.+)$/.exec(url)[1]
     const paramsArr = paramsStr.split('&')
-    const paramsObj = {}
-    paramsArr.forEach(param => {
+    let paramsObj = {}
+    for(let param of paramsArr) {
         if(/=/.test(param)) {
             let [key, val] = param.split('=')
             val = decodeURIComponent(val)
@@ -13,10 +13,10 @@ function parseParam(url) {
                 paramsObj[key] = val
             }
         } else {
-            return paramsObj[param]=true
+            paramsObj[param] = true
         }
-    })
+    }
     return paramsObj
 }
 
-console.log(parseParam('baidu.com?x=1&x=2&y=3'))
+console.log(parseParam('http://baidu.com?x=1&x=2&y=3&z=santa&test'))

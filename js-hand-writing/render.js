@@ -13,4 +13,4 @@ let person = {
     name: '布兰',
     age: 12
 }
-render(template, person); // 我是布兰，年龄12，性别undefined
+console.log(render(template, person)); // 我是布兰，年龄12，性别undefined

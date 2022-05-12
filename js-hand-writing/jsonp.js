@@ -7,6 +7,7 @@ function jsonp({url, params, cbName}){
                 queryStr += `${key}=${paramsp[key]}&`
             }
         }
+        // 添加参数后接callback
         queryStr += `callback=${cbName}`
         return `${url}?${queryStr}`
     }
@@ -14,7 +15,7 @@ function jsonp({url, params, cbName}){
         const scriptEl = document.createElement('script')
         scriptEl.src = genUrl()
         document.body.appendChild(scriptEl)
-        window[cbName] = (res) => {
+        window[cbName] = (res) => { // res即为后端的数据
             resolve(res)
             document.removeChild(scriptEl)
         }

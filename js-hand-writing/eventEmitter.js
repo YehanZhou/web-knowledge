@@ -1,45 +1,43 @@
 class EventEmitter {
-    constructor(){
-        this.cache = []
+    constructor() {
+        this.cache = {}
     }
 
+    // 订阅事件
     on(name, fn) {
         if(this.cache[name]) {
             this.cache[name].push(fn)
-        }else{
+        } else {
             this.cache[name] = [fn]
         }
+
     }
 
+    // 注销订阅事件
     off(name, fn) {
-        let tasks = this.cache[name]
-        if (tasks) {
-            const idx = tasks.findIndex(f => f === fn || f.callback === fn)
-            idx > -1 && tasks.splice(idx,1)
-        }
+       const tasks = this.cache[name]
+       if (tasks) {
+            let idx = tasks.findIndex(f => f === fn)
+            idx > -1 && tasks.splice(idx, 1)
+       }
+
     }
 
-    emit(name, ...args) {
-        let tasks = this.cache[name]
-        if(tasks){
-            tasks.forEach(fn => {
-                fn(...args)
-            })
+    // 发布消息，触发事件
+    emit(name, once = false, ...args) {
+        if(this.cache[name]) {
+            // 创建副本，以防回调中注册相同事件，造成死循环
+            const tasks = this.cache[name].slice()
+            for(let f of tasks) {
+                f(...args)
+            }
         }
-    }
-
-    once(name, ...args) {
-        let tasks = this.cache[name]
-        if(tasks){
-            tasks.forEach(fn => {
-                fn(...args)
-            })
+        if(once) {
+            delete this.cache[name]
         }
-        delete this.cache[name]
     }
 }
 
-// 测试
 let eventBus = new EventEmitter()
 let fn1 = function(name, age) {
 	console.log(`${name} ${age}`)
@@ -49,6 +47,4 @@ let fn2 = function(name, age) {
 }
 eventBus.on('aaa', fn1)
 eventBus.on('aaa', fn2)
-eventBus.emit('aaa', '布兰', 12)
-// '布兰 12'
-// 'hello, 布兰 12'
+eventBus.emit('aaa', false, '布兰', 12)
